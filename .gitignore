@@ -1,0 +1,7 @@
+.project
+.settings
+.classpath
+bin
+lib
+template.jar
+run.log

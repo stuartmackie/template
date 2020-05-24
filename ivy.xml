@@ -1,0 +1,21 @@
+<ivy-module version="2.0">
+    <info organisation="template" module="template" />
+    <configurations>
+        <conf name="compile"/>
+        <conf name="sources"/>
+        <conf name="javadoc"/>
+    </configurations>
+    <dependencies>
+    	<!-- "standard" -->
+        <dependency conf="compile->default;sources;javadoc" org="org.apache.logging.log4j" name="log4j-api"              rev="latest.integration"/>
+        <dependency conf="compile->default;sources;javadoc" org="org.apache.logging.log4j" name="log4j-core"             rev="latest.integration"/>
+        <dependency conf="compile->default;sources;javadoc" org="junit"                    name="junit"                  rev="latest.integration"/>
+        <dependency conf="compile->default;sources;javadoc" org="org.apache.commons"       name="commons-configuration2" rev="latest.integration"/>
+        <dependency conf="compile->default;sources;javadoc" org="commons-beanutils"        name="commons-beanutils"      rev="latest.integration"/>
+        <dependency conf="compile->default;sources;javadoc" org="org.apache.commons"       name="commons-lang3"          rev="latest.integration"/>
+        <dependency conf="compile->default;sources;javadoc" org="commons-io"               name="commons-io"             rev="latest.integration"/>
+        <dependency conf="compile->default;sources;javadoc" org="org.apache.commons"       name="commons-collections4"   rev="latest.integration"/>
+        <dependency conf="compile->default;sources;javadoc" org="com.google.guava"         name="guava"                  rev="latest.integration"/>
+        <!-- project -->
+    </dependencies>
+</ivy-module>

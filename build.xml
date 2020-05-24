@@ -1,0 +1,58 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="template" default="make" basedir=".">
+
+    <property name="src" location="src" />
+    <property name="lib" location="lib" />
+    <property name="bin" location="bin" />
+    <property name="jar-file" value="template.jar" />
+    <property name="main-class" value="template.main.Main" />
+
+    <!-- Libraries. -->
+    <path id="libraries">
+        <fileset dir="${lib}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <!-- Ivy: depends. -->
+    <ivy:settings file="ivysettings.xml"/>
+    <target name="depends">
+        <ivy:retrieve pattern="${lib}/[artifact]-[revision].[ext]" conf="compile"/>
+        <ivy:retrieve pattern="${lib}/src/[artifact]-[revision](-[classifier]).[ext]" conf="sources"/>
+        <ivy:retrieve pattern="${lib}/doc/[artifact]-[revision](-[classifier]).[ext]" conf="javadoc"/>
+    </target>
+
+    <!-- Clean. -->
+    <target name="clean">
+        <delete dir="${bin}" />
+        <delete file="${jar-file}" />
+    </target>
+
+    <!-- Make. -->
+    <target name="make">
+        <mkdir dir="${bin}" />
+        <javac encoding="UTF-8" source="11" target="11" srcdir="${src}" destdir="${bin}" includeantruntime="false">
+            <classpath>
+                <path refid="libraries" />
+            </classpath>
+        </javac>
+        <copy todir="${bin}">
+            <fileset dir="${src}" excludes="**/*.java" />
+        </copy>
+    </target>
+
+    <!-- JAR. -->
+    <target name="jar" depends="clean,make">
+        <manifestclasspath property="jar-cp" jarfile="${jar-file}">
+            <classpath refid="libraries" />
+        </manifestclasspath>
+        <jar jarfile="${jar-file}" basedir="${bin}">
+            <zipgroupfileset dir="${lib}" includes="*.jar" />
+            <manifest>
+                <attribute name="Class-Path" value="${jar-cp}" />
+                <attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Multi-Release" value="true" />
+            </manifest>
+        </jar>
+    </target>
+
+</project>
